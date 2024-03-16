@@ -6,7 +6,7 @@
  * Zen Cart German Version - www.zen-cart-pro.at
  * @copyright Portions Copyright 2003 osCommerce
  * @license https://www.zen-cart-pro.at/license/3_0.txt GNU General Public License V3.0
- * @version $Id: wishlist_cart_actions.php 2024-03-16 09:19:16Z webchills $
+ * @version $Id: wishlist_cart_actions.php 2024-03-16 09:34:16Z webchills $
  */
 if (!defined('IS_ADMIN_FLAG')) {
   die('Illegal Access');
@@ -84,16 +84,19 @@ switch ($_GET['action']) {
 		case 'un_update_wishlist':
 			$cart_updated = false;
 			for ($i=0, $iMax = sizeof($_POST['products_id']); $i< $iMax; $i++) {
+				$attributes ='';
+				if (isset($_POST['id'])) {	
 			(is_array($_POST['id']) ? $attributes = serialize( $_POST['id'] ) : $attributes = '');
-				
+			}
 				require_once(DIR_WS_CLASSES . 'un_wishlist.php');
 				$oWishlist = new un_wishlist($_SESSION['customer_id']);
 				$oWishlist->updateProduct((int)$_POST['products_id'][$i], $attributes, (int)$_POST['wishlist_quantity'][$i], (int)$_POST['priority'][$i], $_POST['comment'][$i]);
-				
+				if (isset($_POST['add_to_cart'])) {	
 				if ( in_array($_POST['products_id'][$i], (is_array($_POST['add_to_cart']) ? $_POST['add_to_cart'] : array())) && $_POST['wishlist_quantity'][$i] != 0 ) {
 					$cart_updated = true;
 					$_SESSION['cart']->add_cart($_POST['products_id'][$i], $_SESSION['cart']->get_quantity(zen_get_uprid($_POST['products_id'][$i], ''))+$_POST['wishlist_quantity'][$i], '');
 				}
+			}
 				if ( in_array($_POST['products_id'][$i], (is_array($_POST['wishlist_delete']) ? $_POST['wishlist_delete'] : array())) or $_POST['wishlist_quantity'][$i] == 0 ) {
 					$oWishlist->removeProduct((int)$_POST['products_id'][$i]);
 				}
