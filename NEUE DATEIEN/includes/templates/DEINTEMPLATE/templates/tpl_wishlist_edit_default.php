@@ -19,21 +19,23 @@
 <?php echo zen_draw_form('un_wishlist_edit', zen_href_link(FILENAME_WISHLIST_EDIT, '', 'SSL')); ?>
 <?php echo zen_draw_hidden_field('meta-process', 1); ?>
 <?php echo zen_draw_hidden_field('op', $_GET['op']); ?>
+<?php if (!empty($id)){ ?>
 <?php echo zen_draw_hidden_field('wid', $_GET['wid']); ?>
+<?php } ?>
 <fieldset>
 	<legend><?php echo FORM_TITLE; ?></legend>
 	<div class="group">
 
 	<div class="formrow">
 		<label class="block" for="required-name"><?php echo FORM_LABEL_NAME; ?><span class="inputrequirement"><?php echo UN_TEXT_FORM_FIELD_REQUIRED; ?></span></label>
-		<br class="clearBoth">
-		<input type="text" name="required-name" value="<?php echo $_POST['required-name']? $_POST['required-name']: $records->fields['name']; ?>" class="l" />
+		<br class="clearBoth">	
+		<input type="text" name="required-name" value="<?php echo (!empty($_POST['required-name']))? $_POST['required-name']: !empty($records->fields['name']); ?>" class="l" />
 	</div>
 
 	<div class="formrow">
 		<label class="block" for="comment"><?php echo FORM_LABEL_COMMENT; ?></label>
 		<br class="clearBoth">
-		<input type="text" name="comment" value="<?php echo $_POST['comment']? $_POST['comment']: $records->fields['comment']; ?>" class="l" />
+		<input type="text" name="comment" value="<?php echo (!empty($_POST['comment']))? $_POST['comment']: !empty($records->fields['comment']); ?>" class="l" />
 	</div>
 
 	

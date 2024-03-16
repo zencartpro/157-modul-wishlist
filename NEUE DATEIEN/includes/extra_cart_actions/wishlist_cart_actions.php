@@ -97,9 +97,11 @@ switch ($_GET['action']) {
 					$_SESSION['cart']->add_cart($_POST['products_id'][$i], $_SESSION['cart']->get_quantity(zen_get_uprid($_POST['products_id'][$i], ''))+$_POST['wishlist_quantity'][$i], '');
 				}
 			}
+			if (isset($_POST['wishlist_delete'])) {	
 				if ( in_array($_POST['products_id'][$i], (is_array($_POST['wishlist_delete']) ? $_POST['wishlist_delete'] : array())) or $_POST['wishlist_quantity'][$i] == 0 ) {
 					$oWishlist->removeProduct((int)$_POST['products_id'][$i]);
 				}
+			}
 				
 			}
 			if ( $cart_updated == true ) {

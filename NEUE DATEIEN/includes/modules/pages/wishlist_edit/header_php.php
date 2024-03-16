@@ -6,7 +6,7 @@
  * Zen Cart German Version - www.zen-cart-pro.at
  * @copyright Portions Copyright 2003 osCommerce
  * @license https://www.zen-cart-pro.at/license/3_0.txt GNU General Public License V3.0
- * @version $Id: header_php.php 2024-03-16 08:02:16Z webchills $
+ * @version $Id: header_php.php 2024-03-16 09:41:16Z webchills $
  */
 if (!zen_is_logged_in()) {
 	$_SESSION['navigation']->set_snapshot();
@@ -21,7 +21,7 @@ require(DIR_WS_MODULES . 'require_languages.php');
 $breadcrumb->add(NAVBAR_TITLE);
 
 // get form data
-$id = isset($_REQUEST['wid']) ? (int) $_REQUEST['wid'] : '';
+$id = isset($_REQUEST['wid']) ? (int) $_REQUEST['wid'] : 0;
 $op = isset($_REQUEST['op']) ? $_REQUEST['op'] : '';
 
 // Get wishlist class and instantiate
@@ -44,7 +44,9 @@ if ( un_check_html_form('wishlist_edit') ) {
     $success = false;
     
     // assign post vars
+    if (isset($_POST['required-name'])) {	
     $aArgs['name'] = $_POST['required-name'];
+  }
     $aArgs['comment'] = $_POST['comment'];
     
 	
